@@ -92,8 +92,8 @@ public class Controller {
 	@FXML
 	void setChoiceBox() {
 
-		cbTipoDato.setItems(
-				FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo", "Patrimonio"));
+		cbTipoDato.setItems(FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo",
+				"Patrimonio", "Ingreso", "Gasto"));
 
 	}
 
