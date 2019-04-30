@@ -1,10 +1,15 @@
 package ui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,9 +56,6 @@ public class Controller {
 			e.printStackTrace();
 		}
 
-		txtNombreDato = new TextField();
-		txtCantidadDato = new TextField();
-
 	}
 
 	// Data
@@ -75,9 +77,8 @@ public class Controller {
 		try {
 			String nombreDato = txtNombreDato.getText();
 			double cantidadDato = Double.parseDouble(txtCantidadDato.getText());
-			
-		}catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 
 		((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
@@ -86,6 +87,14 @@ public class Controller {
 	@FXML
 	void cancelarDato(ActionEvent event) {
 		((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+	}
+
+	@FXML
+	void setChoiceBox() {
+
+		cbTipoDato.setItems(
+				FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo", "Patrimonio"));
+
 	}
 
 }
