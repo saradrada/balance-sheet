@@ -27,6 +27,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("form.fxml"));
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setTitle("Balance General");
 		primaryStage.setScene(scene);
 		primaryStage.show();

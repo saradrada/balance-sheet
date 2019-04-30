@@ -10,9 +10,9 @@ public class Dato {
 	public final static String GASTO = "Gasto";
 
 	private String nombre;
-	private double cantidad;
 	private String tipo;
-	
+	private double cantidad;
+
 	public Dato(String nombre, double cantidad, String tipo) {
 		this.nombre = nombre;
 		this.cantidad = cantidad;
@@ -35,33 +35,6 @@ public class Dato {
 		this.cantidad = cantidad;
 	}
 
-<<<<<<< HEAD
-=======
-	public Dato(String nombre, double cantidad, String tipo) {
-
-		this.nombre = nombre;
-		this.cantidad = cantidad;
-		this.tipo = tipo;
-
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public double getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(double cantidad) {
-		this.cantidad = cantidad;
-	}
-
->>>>>>> 6ba3b62b1c571044ab40cd86b8b801d654676c91
 	public String getTipo() {
 		return tipo;
 	}
@@ -69,12 +42,10 @@ public class Dato {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-<<<<<<< HEAD
-	
-	
-	
-	
-=======
 
->>>>>>> 6ba3b62b1c571044ab40cd86b8b801d654676c91
+	@Override
+	public String toString() {
+		return getNombre()+" "+getCantidad();
+	}
+	
 }
