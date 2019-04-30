@@ -1,47 +1,40 @@
 package ui;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class Controller {
 
-	@FXML
-	private Label labCoName;
+	@FXML private Label labCoName;
+	@FXML private Label labDate;
+	
+	@FXML private ListView<String> listActivosCorrientes;
+	@FXML private ListView<String> listActivoFijos;
+	@FXML private ListView<String> listGastos;
+	@FXML private ListView<String> listPasivos;
+	@FXML private ListView<String> listIngresos;
+	@FXML private ListView<String> listPatrimonio;
 
-	@FXML
-	private Label labDate;
+	// Data
+	@FXML private Button btnCancelar;
 
-	@FXML
-	private GridPane matrizACorrientes;
+	@FXML private TextField txtNombreDato;
+	@FXML private TextField txtCantidadDato;
 
-	@FXML
-	private GridPane matrizAFijos;
-
-	@FXML
-	private GridPane matrizPCorrientes;
-
-	@FXML
-	private GridPane matrizPFijos;
-
-	@FXML
-	private GridPane matrizPatrimonio;
-
+	@FXML private ChoiceBox<String> cbTipoDato;
+	
 	@FXML
 	void agregarDatos(ActionEvent event) {
 
@@ -57,19 +50,6 @@ public class Controller {
 		}
 
 	}
-
-	// Data
-	@FXML
-	private Button btnCancelar;
-
-	@FXML
-	private TextField txtNombreDato;
-
-	@FXML
-	private TextField txtCantidadDato;
-
-	@FXML
-	private ChoiceBox<String> cbTipoDato;
 
 	@FXML
 	void agregarDato(ActionEvent event) {
@@ -91,10 +71,7 @@ public class Controller {
 
 	@FXML
 	void setChoiceBox() {
-
-		cbTipoDato.setItems(
-				FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo", "Patrimonio"));
-
+		cbTipoDato.setItems(FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo", "Patrimonio"));
 	}
 
 }

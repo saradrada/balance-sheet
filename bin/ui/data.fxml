@@ -25,7 +25,7 @@
          <children>
             <TextField fx:id="txtNombreDato" GridPane.columnIndex="1" />
             <TextField fx:id="txtCantidadDato" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ChoiceBox fx:id="cbTipoDato" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="cbTipoDato" onMouseEntered="#setChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Nombre:" GridPane.halignment="LEFT">
                <font>
                   <Font size="14.0" />
