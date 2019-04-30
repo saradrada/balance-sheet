@@ -71,7 +71,14 @@ public class Controller {
 
 	@FXML
 	void setChoiceBox() {
+<<<<<<< HEAD
 		cbTipoDato.setItems(FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo", "Patrimonio"));
+=======
+
+		cbTipoDato.setItems(FXCollections.observableArrayList("Activo corriente", "Activo no corriente", "Pasivo",
+				"Patrimonio", "Ingreso", "Gasto"));
+
+>>>>>>> 6ba3b62b1c571044ab40cd86b8b801d654676c91
 	}
 
 }
