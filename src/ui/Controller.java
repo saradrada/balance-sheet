@@ -3,10 +3,11 @@ package ui;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -14,9 +15,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Dato;
 
@@ -29,6 +28,10 @@ public class Controller {
 	@FXML private ListView<String> listIngresos;
 	@FXML private ListView<String> listPatrimonio;
 
+	public void initialize() {
+
+	}
+	
 	public void agregarDatos() {
 		GridPane grid=new GridPane();
 		Dialog<Pair<String, String>> dialog=new Dialog<>();
@@ -60,12 +63,12 @@ public class Controller {
 		Optional<Pair<String, String>> result = dialog.showAndWait();
 		result.ifPresent(e -> {
 		    aja(e.getKey(), e.getValue(), choices.getValue());
-		    System.out.println(e.getKey()+" : "+e.getValue()+" : "+choices.getValue());
 		});
 	}
 	
 	public void aja(String nombre, String valor, String tipo) {
 		Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
+		actualizarListas(tipo);
 	}
 	
 	public void actualizarListas(String tipo) {
