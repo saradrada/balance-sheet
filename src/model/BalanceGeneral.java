@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 
 public class BalanceGeneral {
 
+	private String nombreCo;
+	private String fechaBG;
 	private ArrayList<Dato> datos;
 
 	public BalanceGeneral() {
@@ -119,5 +121,21 @@ public class BalanceGeneral {
 			sum *= -1;
 		}
 		return sum;
+	}
+
+	public String getNombreCo() {
+		return nombreCo;
+	}
+
+	public void setNombreCo(String nombreCo) {
+		this.nombreCo = nombreCo;
+	}
+
+	public String getFechaBG() {
+		return fechaBG;
+	}
+
+	public void setFechaBG(String fechaBG) {
+		this.fechaBG = fechaBG;
 	}
 }

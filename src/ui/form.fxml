@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -161,7 +162,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="labCoName" alignment="CENTER" prefHeight="29.0" prefWidth="229.0" text="Nombre de la Compañía" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="labCoName" alignment="CENTER" prefHeight="29.0" prefWidth="229.0" text=" " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Palatino Linotype Bold" size="18.0" />
                      </font>
@@ -171,7 +172,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labDate" alignment="CENTER" prefHeight="17.0" prefWidth="108.0" text="Fecha" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Label fx:id="labDate" alignment="CENTER" prefHeight="17.0" prefWidth="108.0" text=" " textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -188,14 +189,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#agregarDatos" prefHeight="26.0" prefWidth="119.0" text="Agregar cuenta" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button fx:id="btnAgregarCuenta" mnemonicParsing="false" onAction="#agregarDatos" prefHeight="26.0" prefWidth="119.0" text="Agregar cuenta" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="119.0" text="Eliminar cuenta" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnEliminarCuenta" mnemonicParsing="false" prefHeight="32.0" prefWidth="119.0" text="Eliminar cuenta" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
+            <ImageView fitHeight="54.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../img/accounting.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </children>

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,14 +44,20 @@ public class Controller {
 	@FXML
 	private Label labTotalPP;
 	@FXML
-	private Label labCoName;
+	public Label labCoName;
 	@FXML
-	private Label labDate;
+	public Label labDate;
+	@FXML
+	private Button btnAgregarCuenta;
+	@FXML
+	private Button btnEliminarCuenta;
 
 	@FXML
 	public void initialize() {
-
 		createTables();
+		btnEliminarCuenta.setDisable(true);
+		labCoName.setText(Main.getBalanceGeneral().getNombreCo());
+		labDate.setText(Main.getBalanceGeneral().getFechaBG());
 	}
 
 	private void createTables() {
@@ -167,36 +172,6 @@ public class Controller {
 
 		valorFormateado = formato.format(totalPP);
 		labTotalPP.setText("TOTAL PASIVOS Y PATRIMONIO:  " + valorFormateado);
-	}
-
-	// Initial form
-
-	@FXML
-	private TextField txtNombreCompania;
-
-	@FXML
-	private DatePicker fecha;
-
-	@FXML
-	void aceptarInfo(ActionEvent event) {
-
-		labCoName.setText(txtNombreCompania.getText());
-
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-
-		LocalDate date = fecha.getValue();
-		if (date != null) {
-			labDate.setText(formatter.format(date));
-		} else {
-			labDate.setText("AAAAAAH");
-		}
-
-		((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-	}
-
-	@FXML
-	void cancelarInfo(ActionEvent event) {
-
 	}
 
 }
