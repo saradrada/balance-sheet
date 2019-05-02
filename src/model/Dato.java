@@ -2,16 +2,17 @@ package model;
 
 public class Dato {
 
-	public final static String ACTIVO_CORRIENTE = "Activo corriente";
-	public final static String ACTIVO_NO_CORRIENTE = "Activo no corriente";
+	public final static String ACTIVO_CORRIENTE = "Activo Corriente";
+	public final static String ACTIVO_NO_CORRIENTE = "Activo No Corriente";
 	public final static String PASIVO = "Pasivo";
 	public final static String PATRIMONIO = "Patrimonio";
 	public final static String INGRESO = "Ingreso";
 	public final static String GASTO = "Gasto";
 
 	private String nombre;
-	private String tipo;
 	private double cantidad;
+	private String cantidadF;
+	private String tipo;
 
 	public Dato(String nombre, double cantidad, String tipo) {
 		this.nombre = nombre;
@@ -19,6 +20,11 @@ public class Dato {
 		this.tipo = tipo;
 	}
 
+	public Dato(String nombre, String cantidadF) {
+		this.nombre = nombre;
+		this.setCantidadF(cantidadF);
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -46,6 +52,14 @@ public class Dato {
 	@Override
 	public String toString() {
 		return getNombre()+" "+getCantidad();
+	}
+
+	public String getCantidadF() {
+		return cantidadF;
+	}
+
+	public void setCantidadF(String cantidadF) {
+		this.cantidadF = cantidadF;
 	}
 	
 }
