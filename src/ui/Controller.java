@@ -1,15 +1,24 @@
 package ui;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -19,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import model.Dato;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -34,6 +44,10 @@ public class Controller {
 	private Label labTotalActivos;
 	@FXML
 	private Label labTotalPP;
+	@FXML
+	private Label labCoName;
+	@FXML
+	private Label labDate;
 
 	@FXML
 	public void initialize() {
@@ -153,6 +167,36 @@ public class Controller {
 
 		valorFormateado = formato.format(totalPP);
 		labTotalPP.setText("TOTAL PASIVOS Y PATRIMONIO:  " + valorFormateado);
+	}
+
+	// Initial form
+
+	@FXML
+	private TextField txtNombreCompania;
+
+	@FXML
+	private DatePicker fecha;
+
+	@FXML
+	void aceptarInfo(ActionEvent event) {
+
+		labCoName.setText(txtNombreCompania.getText());
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+
+		LocalDate date = fecha.getValue();
+		if (date != null) {
+			labDate.setText(formatter.format(date));
+		} else {
+			labDate.setText("AAAAAAH");
+		}
+
+		((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+	}
+
+	@FXML
+	void cancelarInfo(ActionEvent event) {
+
 	}
 
 }

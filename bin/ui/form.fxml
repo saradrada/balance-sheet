@@ -132,7 +132,7 @@
             </AnchorPane>
          </children>
       </GridPane>
-      <AnchorPane layoutY="602.0" prefHeight="54.0" prefWidth="946.0" style="-fx-background-color: getSumaPatrimonio();">
+      <AnchorPane layoutY="602.0" prefHeight="54.0" prefWidth="946.0">
          <children>
             <Label fx:id="labTotalActivos" layoutX="236.0" layoutY="29.0" prefHeight="17.0" prefWidth="229.0" text="TOTAL ACTIVOS: " />
             <Label fx:id="labTotalPP" layoutX="616.0" layoutY="29.0" prefHeight="19.0" prefWidth="315.0" text="TOTAL PASIVOS Y PATRIMONIO:">
