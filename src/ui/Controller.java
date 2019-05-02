@@ -116,6 +116,9 @@ public class Controller {
 	}
 
 	public void addDato(String nombre, String valor, String tipo) {
+		if(tipo.equals("Utilidad")) {
+			tipo = Dato.PATRIMONIO;
+		}
 		Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
 		actualizarLista(tipo);
 		actualizarTotales();

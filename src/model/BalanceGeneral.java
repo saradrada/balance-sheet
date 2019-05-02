@@ -34,6 +34,13 @@ public class BalanceGeneral {
 			if (datos.get(i).getTipo().equalsIgnoreCase(tipo)) {
 				retorno.add(datos.get(i));
 			}
+
+//			if (tipo.equals(Dato.PATRIMONIO)) {
+//				if (datos.get(i).getTipo().equalsIgnoreCase("Utilidad")) {
+//					retorno.add(datos.get(i));
+//				}
+//			}
+
 		}
 		return retorno;
 
@@ -99,7 +106,7 @@ public class BalanceGeneral {
 		for (int i = 0; i < datos.size(); i++) {
 			String tipo = datos.get(i).getTipo();
 			double valor = datos.get(i).getCantidad();
-			if (tipo.equals(Dato.PATRIMONIO) || tipo.equals(Dato.UTILIDAD)) {
+			if (tipo.equals(Dato.PATRIMONIO)) {
 				sum = sum + valor;
 			}
 		}
