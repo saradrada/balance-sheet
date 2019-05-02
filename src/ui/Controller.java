@@ -94,8 +94,8 @@ public class Controller {
 		valor.setPromptText("Valor de la cuenta");
 
 		ChoiceBox<String> choices = new ChoiceBox<>();
-		choices.setItems(
-				FXCollections.observableArrayList("Activo Corriente", "Activo No Corriente", "Pasivo", "Patrimonio"));
+		choices.setItems(FXCollections.observableArrayList("Activo Corriente", "Activo No Corriente", "Pasivo",
+				"Patrimonio", "Utilidad"));
 		grid.add(new Label("Nombre de la cuenta: "), 0, 0);
 		grid.add(nombre, 1, 0);
 		grid.add(new Label("Valor de la cuenta: "), 0, 1);
@@ -153,7 +153,7 @@ public class Controller {
 			cantidadF = formato.format(Main.getBalanceGeneral().getSuma(Dato.PASIVO));
 			a.add(new Dato("Total " + tipo + ": ", cantidadF));
 			tablePasivos.getItems().addAll(a);
-		} else if (tipo.equalsIgnoreCase(Dato.PATRIMONIO)) {
+		} else if (tipo.equalsIgnoreCase(Dato.PATRIMONIO) || tipo.equalsIgnoreCase(Dato.PATRIMONIO)) {
 			tablePatrimonio.getItems().clear();
 			cantidadF = formato.format(Main.getBalanceGeneral().getSumaPatrimonio());
 			a.add(new Dato("Total " + tipo + ": ", cantidadF));

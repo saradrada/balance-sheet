@@ -99,10 +99,8 @@ public class BalanceGeneral {
 		for (int i = 0; i < datos.size(); i++) {
 			String tipo = datos.get(i).getTipo();
 			double valor = datos.get(i).getCantidad();
-			if (tipo.equals(Dato.PATRIMONIO) || tipo.equals(Dato.INGRESO)) {
+			if (tipo.equals(Dato.PATRIMONIO) || tipo.equals(Dato.UTILIDAD)) {
 				sum = sum + valor;
-			} else if (tipo.equals(Dato.GASTO)) {
-				sum = sum - valor;
 			}
 		}
 		return sum;
@@ -116,9 +114,6 @@ public class BalanceGeneral {
 			if (tipo.equals(t)) {
 				sum = sum + valor;
 			}
-		}
-		if (t.equals(Dato.GASTO)) {
-			sum *= -1;
 		}
 		return sum;
 	}

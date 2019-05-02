@@ -6,8 +6,7 @@ public class Dato {
 	public final static String ACTIVO_NO_CORRIENTE = "Activo No Corriente";
 	public final static String PASIVO = "Pasivo";
 	public final static String PATRIMONIO = "Patrimonio";
-	public final static String INGRESO = "Ingreso";
-	public final static String GASTO = "Gasto";
+	public final static String UTILIDAD = "Utilidad";
 
 	private String nombre;
 	private double cantidad;
@@ -24,7 +23,7 @@ public class Dato {
 		this.nombre = nombre;
 		this.setCantidadF(cantidadF);
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -51,7 +50,7 @@ public class Dato {
 
 	@Override
 	public String toString() {
-		return getNombre()+" "+getCantidad();
+		return getNombre() + " " + getCantidad();
 	}
 
 	public String getCantidadF() {
@@ -61,5 +60,5 @@ public class Dato {
 	public void setCantidadF(String cantidadF) {
 		this.cantidadF = cantidadF;
 	}
-	
+
 }
