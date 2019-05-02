@@ -1,9 +1,6 @@
 package ui;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -15,21 +12,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import model.Dato;
-import javafx.stage.Stage;
 
 public class Controller {
 
@@ -55,7 +52,6 @@ public class Controller {
 	private Button btnBalanceGeneral;
 	@FXML
 	private Button btnEliminarCuenta;
-
 	@FXML
 	public void initialize() {
 		createTables();
@@ -127,12 +123,51 @@ public class Controller {
 	}
 
 	public void addDato(String nombre, String valor, String tipo) {
-		if(tipo.equals("Utilidad")) {
-			tipo = Dato.PATRIMONIO;
+
+		Alert alert = null;
+		if (nombre == null || nombre.equals("") || valor == null || valor.equals("") || tipo == null
+				|| tipo.equals("")) {
+
+			if (nombre == null || nombre.equals("")) {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error en el nombre.");
+				alert.setContentText("El nombre no puede estar vacío.");
+				alert.showAndWait();
+
+			} else if (valor == null || valor.equals("")) {
+
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error en el valor.");
+				alert.setContentText("El valor no puede estar vacío.");
+				alert.showAndWait();
+			} else {
+
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error en el tipo.");
+				alert.setContentText("El tipo no puede estar vacío.");
+				alert.showAndWait();
+			}
+		} else if(valor.startsWith("-")){
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Error en el valor.");
+			alert.setContentText("El valor ingresado debe ser positivo.");
+			alert.showAndWait();
+			
+		}else {
+
+			if (tipo.equals("Utilidad")) {
+				tipo = Dato.PATRIMONIO;
+			}
+
+			Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
+			actualizarLista(tipo);
+			actualizarTotales();
 		}
-		Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
-		actualizarLista(tipo);
-		actualizarTotales();
+
 	}
 
 	public void actualizarLista(String tipo) {
@@ -187,5 +222,29 @@ public class Controller {
 		valorFormateado = formato.format(totalPP);
 		labTotalPP.setText("TOTAL PASIVOS Y PATRIMONIO:  " + valorFormateado);
 	}
+	
+
+    @FXML
+    void evaluar(ActionEvent event) {
+
+    	if(Main.getBalanceGeneral().getSumaActivos() ==  Main.getBalanceGeneral().getSumaPasivosYPatrimonio()) {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Información");
+			alert.setHeaderText("Balance General.");
+			alert.setContentText("El balance general es correcto. Los activos son iguales a la suma de Pasivos y Patrimonio.");
+			alert.showAndWait();
+    	}else {
+    		double d = Main.getBalanceGeneral().getSumaActivos() -  Main.getBalanceGeneral().getSumaPasivosYPatrimonio();
+    		DecimalFormat formato = new DecimalFormat("	$ #,###.###");
+    		String cantidadF = "";
+    		cantidadF = formato.format(d);
+    		
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Información");
+			alert.setHeaderText("Balance General.");
+			alert.setContentText("El balance general no es correcto. Los activos no son iguales a la suma de Pasivos y Patrimonio.\nLa diferencia es de: " + cantidadF);
+			alert.showAndWait();
+    	}
+    }
 
 }
