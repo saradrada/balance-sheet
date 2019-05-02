@@ -1,33 +1,26 @@
 package ui;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import model.Dato;
-import javafx.stage.Stage;
 
 public class Controller {
 
@@ -49,13 +42,10 @@ public class Controller {
 	public Label labDate;
 	@FXML
 	private Button btnAgregarCuenta;
-	@FXML
-	private Button btnEliminarCuenta;
 
 	@FXML
 	public void initialize() {
 		createTables();
-		btnEliminarCuenta.setDisable(true);
 		labCoName.setText(Main.getBalanceGeneral().getNombreCo());
 		labDate.setText(Main.getBalanceGeneral().getFechaBG());
 	}
@@ -116,12 +106,44 @@ public class Controller {
 	}
 
 	public void addDato(String nombre, String valor, String tipo) {
-		if(tipo.equals("Utilidad")) {
-			tipo = Dato.PATRIMONIO;
+
+		Alert alert = null;
+		if (nombre == null || nombre.equals("") || valor == null || valor.equals("") || tipo == null
+				|| tipo.equals("")) {
+
+			if (nombre == null || nombre.equals("")) {
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error en el nombre.");
+				alert.setContentText("El nombre no puede estar vacío.");
+				alert.showAndWait();
+
+			} else if (valor == null || valor.equals("")) {
+
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error en el valor.");
+				alert.setContentText("El valor no puede estar vacío.");
+				alert.showAndWait();
+			} else {
+
+				alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error en el tipo.");
+				alert.setContentText("El tipo no puede estar vacío.");
+				alert.showAndWait();
+			}
+		} else {
+
+			if (tipo.equals("Utilidad")) {
+				tipo = Dato.PATRIMONIO;
+			}
+
+			Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
+			actualizarLista(tipo);
+			actualizarTotales();
 		}
-		Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
-		actualizarLista(tipo);
-		actualizarTotales();
+
 	}
 
 	public void actualizarLista(String tipo) {
