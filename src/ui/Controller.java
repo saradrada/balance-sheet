@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -133,7 +134,14 @@ public class Controller {
 				alert.setContentText("El tipo no puede estar vacío.");
 				alert.showAndWait();
 			}
-		} else {
+		} else if(valor.startsWith("-")){
+			alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Error en el valor.");
+			alert.setContentText("El valor ingresado debe ser positivo.");
+			alert.showAndWait();
+			
+		}else {
 
 			if (tipo.equals("Utilidad")) {
 				tipo = Dato.PATRIMONIO;
@@ -198,5 +206,29 @@ public class Controller {
 		valorFormateado = formato.format(totalPP);
 		labTotalPP.setText("TOTAL PASIVOS Y PATRIMONIO:  " + valorFormateado);
 	}
+	
+
+    @FXML
+    void evaluar(ActionEvent event) {
+
+    	if(Main.getBalanceGeneral().getSumaActivos() ==  Main.getBalanceGeneral().getSumaPasivosYPatrimonio()) {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Información");
+			alert.setHeaderText("Balance General.");
+			alert.setContentText("El balance general es correcto. Los activos son iguales a la suma de Pasivos y Patrimonio.");
+			alert.showAndWait();
+    	}else {
+    		double d = Main.getBalanceGeneral().getSumaActivos() -  Main.getBalanceGeneral().getSumaPasivosYPatrimonio();
+    		DecimalFormat formato = new DecimalFormat("	$ #,###.###");
+    		String cantidadF = "";
+    		cantidadF = formato.format(d);
+    		
+    		Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Información");
+			alert.setHeaderText("Balance General.");
+			alert.setContentText("El balance general no es correcto. Los activos no son iguales a la suma de Pasivos y Patrimonio.\nLa diferencia es de: " + cantidadF);
+			alert.showAndWait();
+    	}
+    }
 
 }
