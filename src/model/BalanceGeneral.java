@@ -2,9 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class BalanceGeneral {
 
 	private String nombreCo;
@@ -24,26 +21,36 @@ public class BalanceGeneral {
 	}
 
 	public void addDato(String nombre, double cantidad, String tipo) {
-		datos.add(new Dato(nombre, cantidad, tipo));
+		boolean flag=false;
+		for(int i=0;i<datos.size();i++) {
+			if(datos.get(i).getNombre().equalsIgnoreCase(nombre) && datos.get(i).getTipo().equalsIgnoreCase(tipo)) {
+				datos.get(i).setCantidad(datos.get(i).getCantidad()+cantidad);
+				flag=true;
+				break;
+			}
+		}
+		if(flag==false) {
+			datos.add(new Dato(nombre, cantidad, tipo));
+		}
+	}
+	
+	public void eliminarDato(Dato borrar) {
+		for (int i = 0; i < datos.size(); i++) {
+			if(borrar.getNombre().equalsIgnoreCase(datos.get(i).getNombre())) {
+				datos.remove(i);
+				break;
+			}
+		}
 	}
 
 	public ArrayList<Dato> getPorTipo(String tipo) {
-
 		ArrayList<Dato> retorno = new ArrayList<>();
 		for (int i = 0; i < datos.size(); i++) {
 			if (datos.get(i).getTipo().equalsIgnoreCase(tipo)) {
 				retorno.add(datos.get(i));
 			}
-
-//			if (tipo.equals(Dato.PATRIMONIO)) {
-//				if (datos.get(i).getTipo().equalsIgnoreCase("Utilidad")) {
-//					retorno.add(datos.get(i));
-//				}
-//			}
-
 		}
 		return retorno;
-
 	}
 
 	public double getSumaActivos() {

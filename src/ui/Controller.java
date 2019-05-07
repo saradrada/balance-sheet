@@ -43,16 +43,44 @@ public class Controller {
 	public Label labDate;
 	@FXML
 	private Button btnAgregarCuenta;
-
+	@FXML
+	private Button butEliminar;
+	
 	@FXML
 	public void initialize() {
 		createTables();
 		labCoName.setText(Main.getBalanceGeneral().getNombreCo());
 		labDate.setText(Main.getBalanceGeneral().getFechaBG());
+		tableActivosCorrientes.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+		tableActivoFijos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+		tablePasivos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+		tablePatrimonio.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+		butEliminar.setOnAction(e -> {
+			eliminar();
+		});
 	}
 
+	private void eliminar() {
+		Dato ac=tableActivosCorrientes.getSelectionModel().getSelectedItem();
+		Dato pat=tablePatrimonio.getSelectionModel().getSelectedItem();
+		Dato af=tablePasivos.getSelectionModel().getSelectedItem();
+		Dato pa=tableActivosCorrientes.getSelectionModel().getSelectedItem();
+		if(ac!=null) {
+			Main.getBalanceGeneral().eliminarDato(ac);
+			actualizarLista(Dato.ACTIVO_CORRIENTE);
+		}else if(pat!=null) {
+			Main.getBalanceGeneral().eliminarDato(pat);
+			actualizarLista(Dato.PATRIMONIO);
+		}else if(af!=null) {
+			Main.getBalanceGeneral().eliminarDato(af);
+			actualizarLista(Dato.ACTIVO_NO_CORRIENTE);
+		}else if(pa!=null) {
+			Main.getBalanceGeneral().eliminarDato(pa);
+			actualizarLista(Dato.PASIVO);
+		}
+	}
+	
 	private void createTables() {
-
 		createTable(tableActivosCorrientes);
 		createTable(tableActivoFijos);
 		createTable(tablePasivos);
@@ -86,7 +114,7 @@ public class Controller {
 
 		ChoiceBox<String> choices = new ChoiceBox<>();
 		choices.setItems(FXCollections.observableArrayList("Activo Corriente", "Activo No Corriente", "Pasivo",
-				"Patrimonio", "Utilidad"));
+				"Patrimonio"));
 		grid.add(new Label("Nombre de la cuenta: "), 0, 0);
 		grid.add(nombre, 1, 0);
 		grid.add(new Label("Valor de la cuenta: "), 0, 1);
@@ -107,27 +135,22 @@ public class Controller {
 	}
 
 	public void addDato(String nombre, String valor, String tipo) {
-
 		Alert alert = null;
 		if (nombre == null || nombre.equals("") || valor == null || valor.equals("") || tipo == null
 				|| tipo.equals("")) {
-
 			if (nombre == null || nombre.equals("")) {
 				alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("Error en el nombre.");
 				alert.setContentText("El nombre no puede estar vacío.");
 				alert.showAndWait();
-
 			} else if (valor == null || valor.equals("")) {
-
 				alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("Error en el valor.");
 				alert.setContentText("El valor no puede estar vacío.");
 				alert.showAndWait();
 			} else {
-
 				alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("Error en el tipo.");
@@ -140,37 +163,24 @@ public class Controller {
 			alert.setHeaderText("Error en el valor.");
 			alert.setContentText("El valor ingresado debe ser positivo.");
 			alert.showAndWait();
-			
 		}else {
-
-			if (tipo.equals("Utilidad")) {
-				tipo = Dato.PATRIMONIO;
-			}
-
 			Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
 			actualizarLista(tipo);
 			actualizarTotales();
 		}
-
 	}
-
+	
 	public void actualizarLista(String tipo) {
-
 		ObservableList<Dato> a = FXCollections.observableArrayList();
 		ArrayList<Dato> b = Main.getBalanceGeneral().getPorTipo(tipo);
-
 		a.clear();
-
 		DecimalFormat formato = new DecimalFormat("	$ #,###.###");
 		String cantidadF = "";
-
 		for (int i = 0; i < b.size(); i++) {
 			Dato dato = b.get(i);
 			cantidadF = formato.format(dato.getCantidad());
 			a.add(new Dato(dato.getNombre(), cantidadF));
-			System.out.println(cantidadF);
 		}
-
 		if (tipo.equalsIgnoreCase(Dato.ACTIVO_CORRIENTE)) {
 			tableActivosCorrientes.getItems().clear();
 			cantidadF = formato.format(Main.getBalanceGeneral().getSumaActivoCorriente());
@@ -191,7 +201,6 @@ public class Controller {
 			cantidadF = formato.format(Main.getBalanceGeneral().getSumaPatrimonio());
 			a.add(new Dato("Total " + tipo + ": ", cantidadF));
 			tablePatrimonio.getItems().addAll(a);
-
 		}
 	}
 

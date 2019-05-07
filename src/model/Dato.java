@@ -6,7 +6,6 @@ public class Dato {
 	public final static String ACTIVO_NO_CORRIENTE = "Activo No Corriente";
 	public final static String PASIVO = "Pasivo";
 	public final static String PATRIMONIO = "Patrimonio";
-	public final static String UTILIDAD = "Utilidad";
 
 	private String nombre;
 	private double cantidad;
