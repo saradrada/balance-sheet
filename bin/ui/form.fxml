@@ -164,17 +164,6 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="btnAgregarCuenta" mnemonicParsing="false" onAction="#agregarDatos" prefHeight="26.0" prefWidth="119.0" text="Agregar cuenta" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnEliminarCuenta" mnemonicParsing="false" prefHeight="32.0" prefWidth="119.0" text="Eliminar cuenta" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="btnBalanceGeneral" mnemonicParsing="false" prefHeight="32.0" prefWidth="193.0" text="Mostrar Balance General" GridPane.rowIndex="2" />
               </rowConstraints>
                <children>
                   <GridPane>

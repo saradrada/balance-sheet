@@ -113,11 +113,6 @@ public class BalanceGeneral {
 		return sum;
 	}
 
-	public String getBalance() {
-		double ayuwoki=getSumaActivos()+getSuma(Dato.PASIVO);
-		return "Patrimonio ("+getSumaPatrimonio()+") = Activos ("+getSumaActivos()+") - Pasivos ("+getSuma(Dato.PASIVO)+")\n"+getSumaPatrimonio()+" = "+ayuwoki+"";
-	}
-	
 	public double getSuma(String t) {
 		double sum = 0;
 		for (int i = 0; i < datos.size(); i++) {

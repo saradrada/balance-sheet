@@ -7,11 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -48,21 +43,10 @@ public class Controller {
 	public Label labDate;
 	@FXML
 	private Button btnAgregarCuenta;
-	@FXML
-	private Button btnBalanceGeneral;
-	@FXML
-	private Button btnEliminarCuenta;
+
 	@FXML
 	public void initialize() {
 		createTables();
-		btnBalanceGeneral.setOnAction(e -> {
-			Alert alert=new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Balance General");
-			alert.setHeaderText(null);
-			alert.setContentText(Main.getBalanceGeneral().getBalance());
-			alert.showAndWait();
-		});
-		btnEliminarCuenta.setDisable(true);
 		labCoName.setText(Main.getBalanceGeneral().getNombreCo());
 		labDate.setText(Main.getBalanceGeneral().getFechaBG());
 	}
