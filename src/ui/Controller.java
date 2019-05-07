@@ -28,7 +28,7 @@ public class Controller {
 	@FXML
 	private TableView<Dato> tableActivosCorrientes;
 	@FXML
-	private TableView<Dato> tableActivoFijos;
+	private TableView<Dato> tableActivosNoCorrientes;
 	@FXML
 	private TableView<Dato> tablePasivos;
 	@FXML
@@ -52,7 +52,7 @@ public class Controller {
 		labCoName.setText(Main.getBalanceGeneral().getNombreCo());
 		labDate.setText(Main.getBalanceGeneral().getFechaBG());
 		tableActivosCorrientes.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
-		tableActivoFijos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+		tableActivosNoCorrientes.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
 		tablePasivos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
 		tablePatrimonio.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
 		butEliminar.setOnAction(e -> {
@@ -63,29 +63,28 @@ public class Controller {
 	private void eliminar() {
 		Dato ac=tableActivosCorrientes.getSelectionModel().getSelectedItem();
 		Dato pat=tablePatrimonio.getSelectionModel().getSelectedItem();
-		Dato af=tablePasivos.getSelectionModel().getSelectedItem();
-		Dato pa=tableActivosCorrientes.getSelectionModel().getSelectedItem();
+		Dato pas=tablePasivos.getSelectionModel().getSelectedItem();
+		Dato anc=tableActivosNoCorrientes.getSelectionModel().getSelectedItem();
 		if(ac!=null) {
 			Main.getBalanceGeneral().eliminarDato(ac);
 			actualizarLista(Dato.ACTIVO_CORRIENTE);
 		}else if(pat!=null) {
 			Main.getBalanceGeneral().eliminarDato(pat);
 			actualizarLista(Dato.PATRIMONIO);
-		}else if(af!=null) {
-			Main.getBalanceGeneral().eliminarDato(af);
+		}else if(anc!=null) {
+			Main.getBalanceGeneral().eliminarDato(anc);
 			actualizarLista(Dato.ACTIVO_NO_CORRIENTE);
-		}else if(pa!=null) {
-			Main.getBalanceGeneral().eliminarDato(pa);
+		}else if(pas!=null) {
+			Main.getBalanceGeneral().eliminarDato(pas);
 			actualizarLista(Dato.PASIVO);
 		}
 	}
 	
 	private void createTables() {
 		createTable(tableActivosCorrientes);
-		createTable(tableActivoFijos);
+		createTable(tableActivosNoCorrientes);
 		createTable(tablePasivos);
 		createTable(tablePatrimonio);
-
 	}
 
 	private void createTable(TableView<Dato> table) {
@@ -187,10 +186,10 @@ public class Controller {
 			a.add(new Dato("Total " + tipo + ": ", cantidadF));
 			tableActivosCorrientes.getItems().addAll(a);
 		} else if (tipo.equalsIgnoreCase(Dato.ACTIVO_NO_CORRIENTE)) {
-			tableActivoFijos.getItems().clear();
+			tableActivosNoCorrientes.getItems().clear();
 			cantidadF = formato.format(Main.getBalanceGeneral().getSumaActivoNoCorriente());
 			a.add(new Dato("Total " + tipo + ": ", cantidadF));
-			tableActivoFijos.getItems().addAll(a);
+			tableActivosNoCorrientes.getItems().addAll(a);
 		} else if (tipo.equalsIgnoreCase(Dato.PASIVO)) {
 			tablePasivos.getItems().clear();
 			cantidadF = formato.format(Main.getBalanceGeneral().getSuma(Dato.PASIVO));

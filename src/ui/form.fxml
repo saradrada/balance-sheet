@@ -48,7 +48,7 @@
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                            <children>
                               <Label layoutX="23.0" layoutY="-8.0" text="Activos no corrientes" />
-                              <TableView fx:id="tableActivoFijos" layoutX="16.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="450.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="12.0" />
+                              <TableView fx:id="tableActivosNoCorrientes" layoutX="16.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="450.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="12.0" />
                            </children>
                         </AnchorPane>
                      </children>
