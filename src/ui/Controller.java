@@ -1,6 +1,8 @@
 package ui;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -12,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -45,7 +48,9 @@ public class Controller {
 	private Button btnAgregarCuenta;
 	@FXML
 	private Button butEliminar;
-	
+	@FXML
+	private Button btnEditarDatos;
+
 	@FXML
 	public void initialize() {
 		createTables();
@@ -61,25 +66,25 @@ public class Controller {
 	}
 
 	private void eliminar() {
-		Dato ac=tableActivosCorrientes.getSelectionModel().getSelectedItem();
-		Dato pat=tablePatrimonio.getSelectionModel().getSelectedItem();
-		Dato pas=tablePasivos.getSelectionModel().getSelectedItem();
-		Dato anc=tableActivosNoCorrientes.getSelectionModel().getSelectedItem();
-		if(ac!=null) {
+		Dato ac = tableActivosCorrientes.getSelectionModel().getSelectedItem();
+		Dato pat = tablePatrimonio.getSelectionModel().getSelectedItem();
+		Dato pas = tablePasivos.getSelectionModel().getSelectedItem();
+		Dato anc = tableActivosNoCorrientes.getSelectionModel().getSelectedItem();
+		if (ac != null) {
 			Main.getBalanceGeneral().eliminarDato(ac);
 			actualizarLista(Dato.ACTIVO_CORRIENTE);
-		}else if(pat!=null) {
+		} else if (pat != null) {
 			Main.getBalanceGeneral().eliminarDato(pat);
 			actualizarLista(Dato.PATRIMONIO);
-		}else if(anc!=null) {
+		} else if (anc != null) {
 			Main.getBalanceGeneral().eliminarDato(anc);
 			actualizarLista(Dato.ACTIVO_NO_CORRIENTE);
-		}else if(pas!=null) {
+		} else if (pas != null) {
 			Main.getBalanceGeneral().eliminarDato(pas);
 			actualizarLista(Dato.PASIVO);
 		}
 	}
-	
+
 	private void createTables() {
 		createTable(tableActivosCorrientes);
 		createTable(tableActivosNoCorrientes);
@@ -112,8 +117,8 @@ public class Controller {
 		valor.setPromptText("Valor de la cuenta");
 
 		ChoiceBox<String> choices = new ChoiceBox<>();
-		choices.setItems(FXCollections.observableArrayList("Activo Corriente", "Activo No Corriente", "Pasivo",
-				"Patrimonio"));
+		choices.setItems(
+				FXCollections.observableArrayList("Activo Corriente", "Activo No Corriente", "Pasivo", "Patrimonio"));
 		grid.add(new Label("Nombre de la cuenta: "), 0, 0);
 		grid.add(nombre, 1, 0);
 		grid.add(new Label("Valor de la cuenta: "), 0, 1);
@@ -156,19 +161,19 @@ public class Controller {
 				alert.setContentText("El tipo no puede estar vacío.");
 				alert.showAndWait();
 			}
-		} else if(valor.startsWith("-")){
+		} else if (valor.startsWith("-")) {
 			alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Error en el valor.");
 			alert.setContentText("El valor ingresado debe ser positivo.");
 			alert.showAndWait();
-		}else {
+		} else {
 			Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
 			actualizarLista(tipo);
 			actualizarTotales();
 		}
 	}
-	
+
 	public void actualizarLista(String tipo) {
 		ObservableList<Dato> a = FXCollections.observableArrayList();
 		ArrayList<Dato> b = Main.getBalanceGeneral().getPorTipo(tipo);
@@ -214,29 +219,96 @@ public class Controller {
 		valorFormateado = formato.format(totalPP);
 		labTotalPP.setText("TOTAL PASIVOS Y PATRIMONIO:  " + valorFormateado);
 	}
-	
 
-    @FXML
-    void evaluar(ActionEvent event) {
+	@FXML
+	void evaluar(ActionEvent event) {
 
-    	if(Main.getBalanceGeneral().getSumaActivos() ==  Main.getBalanceGeneral().getSumaPasivosYPatrimonio()) {
-    		Alert alert = new Alert(AlertType.INFORMATION);
+		if (Main.getBalanceGeneral().getSumaActivos() == Main.getBalanceGeneral().getSumaPasivosYPatrimonio()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Información");
 			alert.setHeaderText("Balance General.");
-			alert.setContentText("El balance general es correcto. Los activos son iguales a la suma de Pasivos y Patrimonio.");
+			alert.setContentText(
+					"El balance general es correcto. Los activos son iguales a la suma de Pasivos y Patrimonio.");
 			alert.showAndWait();
-    	}else {
-    		double d = Main.getBalanceGeneral().getSumaActivos() -  Main.getBalanceGeneral().getSumaPasivosYPatrimonio();
-    		DecimalFormat formato = new DecimalFormat("	$ #,###.###");
-    		String cantidadF = "";
-    		cantidadF = formato.format(d);
-    		
-    		Alert alert = new Alert(AlertType.INFORMATION);
+		} else {
+			double d = Main.getBalanceGeneral().getSumaActivos() - Main.getBalanceGeneral().getSumaPasivosYPatrimonio();
+			DecimalFormat formato = new DecimalFormat("	$ #,###.###");
+			String cantidadF = "";
+			cantidadF = formato.format(d);
+
+			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Información");
 			alert.setHeaderText("Balance General.");
-			alert.setContentText("El balance general no es correcto. Los activos no son iguales a la suma de Pasivos y Patrimonio.\nLa diferencia es de: " + cantidadF);
+			alert.setContentText(
+					"El balance general no es correcto. Los activos no son iguales a la suma de Pasivos y Patrimonio.\nLa diferencia es de: "
+							+ cantidadF);
 			alert.showAndWait();
-    	}
-    }
+		}
+	}
+
+	@FXML
+	void editarDatos(ActionEvent event) {
+
+		GridPane grid = new GridPane();
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		ButtonType loginButtonType = new ButtonType("Aceptar", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+		
+		dialog.setTitle("Editar datos Balance General");
+		dialog.setHeaderText(null);
+		TextField nombre = new TextField();
+		nombre.setPromptText("Nombre de la empresa");
+		DatePicker fecha = new DatePicker();
+		fecha.setPromptText("Fecha del Balance General");
+
+		grid.add(new Label("Nombre de la empresa: "), 0, 0);
+		grid.add(nombre, 0, 1);
+		grid.add(new Label("Fecha: "), 1, 0);
+		grid.add(fecha, 1, 1);
+
+		dialog.getDialogPane().setContent(grid);
+
+		dialog.setResultConverter(f -> {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+			LocalDate date = fecha.getValue();
+			String fechaF = "";
+			Alert alert = null;
+
+			if (f == loginButtonType) {
+				if (date != null) {
+					fechaF = formatter.format(date);
+				} else {
+					alert = alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Error en la fecha.");
+					alert.setContentText("La fecha no puede estar vacía.");
+					alert.showAndWait();
+				}
+
+				return new Pair<>(nombre.getText(), fechaF);
+
+			}
+			return new Pair<>(labCoName.getText(), labDate.getText());
+		});
+
+		Optional<Pair<String, String>> result = dialog.showAndWait();
+		result.ifPresent(e -> {
+			if (e.getKey() == null || e.getKey().contentEquals("") || e.getValue() == null
+					|| e.getValue().contentEquals("")) {
+
+				if (e.getKey() == null || e.getKey().contentEquals("")) {
+					Alert alert = alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Error en el nombre.");
+					alert.setContentText("El nombre no puede estar vacío.");
+					alert.showAndWait();
+				}
+			} else {
+				labCoName.setText(e.getKey());
+				labDate.setText(e.getValue());
+			}
+
+		});
+	}
 
 }
