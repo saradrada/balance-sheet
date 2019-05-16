@@ -21,22 +21,22 @@ public class BalanceGeneral {
 	}
 
 	public void addDato(String nombre, double cantidad, String tipo) {
-		boolean flag=false;
-		for(int i=0;i<datos.size();i++) {
-			if(datos.get(i).getNombre().equalsIgnoreCase(nombre) && datos.get(i).getTipo().equalsIgnoreCase(tipo)) {
-				datos.get(i).setCantidad(datos.get(i).getCantidad()+cantidad);
-				flag=true;
+		boolean flag = false;
+		for (int i = 0; i < datos.size(); i++) {
+			if (datos.get(i).getNombre().equalsIgnoreCase(nombre) && datos.get(i).getTipo().equalsIgnoreCase(tipo)) {
+				datos.get(i).setCantidad(datos.get(i).getCantidad() + cantidad);
+				flag = true;
 				break;
 			}
 		}
-		if(flag==false) {
+		if (flag == false) {
 			datos.add(new Dato(nombre, cantidad, tipo));
 		}
 	}
-	
+
 	public void eliminarDato(Dato borrar) {
 		for (int i = 0; i < datos.size(); i++) {
-			if(borrar.getNombre().equalsIgnoreCase(datos.get(i).getNombre())) {
+			if (borrar.getNombre().equalsIgnoreCase(datos.get(i).getNombre())) {
 				datos.remove(i);
 				break;
 			}
@@ -60,10 +60,7 @@ public class BalanceGeneral {
 			if (tipo.equals(Dato.ACTIVO_CORRIENTE) || tipo.equals(Dato.ACTIVO_NO_CORRIENTE)) {
 				String nombre = datos.get(i).getNombre();
 				double valor = datos.get(i).getCantidad();
-				if (nombre.contains("Depreciacion") || nombre.contains("depreciacion")
-						|| nombre.contains("Depreciación") || nombre.contains("depreciación")) {
-					valor = valor * -1;
-				}
+
 				sum = sum + valor;
 			}
 		}
@@ -77,10 +74,7 @@ public class BalanceGeneral {
 			if (tipo.equals(Dato.ACTIVO_CORRIENTE)) {
 				String nombre = datos.get(i).getNombre();
 				double valor = datos.get(i).getCantidad();
-				if (nombre.contains("Depreciacion") || nombre.contains("depreciacion")
-						|| nombre.contains("Depreciación") || nombre.contains("depreciación")) {
-					valor = valor * -1;
-				}
+
 				sum = sum + valor;
 			}
 		}
@@ -94,10 +88,7 @@ public class BalanceGeneral {
 			if (tipo.equals(Dato.ACTIVO_NO_CORRIENTE)) {
 				String nombre = datos.get(i).getNombre();
 				double valor = datos.get(i).getCantidad();
-				if (nombre.contains("Depreciacion") || nombre.contains("depreciacion")
-						|| nombre.contains("Depreciación") || nombre.contains("depreciación")) {
-					valor = valor * -1;
-				}
+
 				sum = sum + valor;
 			}
 		}
@@ -114,6 +105,8 @@ public class BalanceGeneral {
 			String tipo = datos.get(i).getTipo();
 			double valor = datos.get(i).getCantidad();
 			if (tipo.equals(Dato.PATRIMONIO)) {
+				String nombre = datos.get(i).getNombre();
+
 				sum = sum + valor;
 			}
 		}

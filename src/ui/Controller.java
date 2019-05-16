@@ -168,7 +168,13 @@ public class Controller {
 			alert.setContentText("El valor ingresado debe ser positivo.");
 			alert.showAndWait();
 		} else {
-			Main.getBalanceGeneral().addDato(nombre, Double.parseDouble(valor), tipo);
+			double valor2 = Double.parseDouble(valor);
+			if (nombre.contains("Perdida") || nombre.contains("perdida") || nombre.contains("Pérdida")
+					|| nombre.contains("pérdida") || nombre.contains("Depreciacion") || nombre.contains("depreciacion")
+					|| nombre.contains("Depreciación") || nombre.contains("depreciación")) {
+				valor2 = Double.parseDouble(valor) * -1;
+			}
+			Main.getBalanceGeneral().addDato(nombre, valor2, tipo);
 			actualizarLista(tipo);
 			actualizarTotales();
 		}
@@ -179,6 +185,7 @@ public class Controller {
 		ArrayList<Dato> b = Main.getBalanceGeneral().getPorTipo(tipo);
 		a.clear();
 		DecimalFormat formato = new DecimalFormat("	$ #,###.###");
+
 		String cantidadF = "";
 		for (int i = 0; i < b.size(); i++) {
 			Dato dato = b.get(i);
@@ -253,7 +260,7 @@ public class Controller {
 		Dialog<Pair<String, String>> dialog = new Dialog<>();
 		ButtonType loginButtonType = new ButtonType("Aceptar", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-		
+
 		dialog.setTitle("Editar datos Balance General");
 		dialog.setHeaderText(null);
 		TextField nombre = new TextField();
